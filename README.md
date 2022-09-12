@@ -36,7 +36,7 @@ Any other value will be ignored.
 		"cond"		"109" 	// TF_COND_TRANQUILIZED
 		"crittype"	"2" 	// minicrit
 	}
-	"40"        			// Item definition index for Medic's Bonesaw
+	"40"        			// Item definition index for soldier's R.P.G.
 	{
 		"cond"		"81" 	// TF_COND_BLASTJUMPING
 		"crittype"	"1" 	// crit
