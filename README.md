@@ -3,7 +3,7 @@ TF2Classic's `or_crit_vs_playercond` attribute, expanded.
 
 ## Features
 - Easy configuration
-- Allows usage of every available condition
+- Allows usage of any available condition
 - Option to deal mini-crits instead of crits
 - Apply effect to sentry, if using PDA item definition index
 - Weapon-only effect, eliminating the need of using `provide_on_active` attribute
