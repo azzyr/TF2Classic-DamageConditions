@@ -1,5 +1,5 @@
 # TF2Classic-CritVsCond
-TF2Classic's or_crit_vs_playercond attribute, expanded.
+TF2Classic's `or_crit_vs_playercond` attribute, expanded.
 
 ## Features
 - Easy configuration
