@@ -87,7 +87,7 @@ public Action OnTakeDamage(int victim, int& attacker, int& inflictor, float& dam
 	int weaponIndex;
 
 	char classname[32];
-	GetEdictClassname(weapon, classname, 32);
+	GetEntityClassname(weapon, classname, 32);
 
 	if(strcmp(classname, "obj_sentrygun") == 0)
 		weaponIndex = GetWeaponIndex(GetPlayerWeaponSlot(attacker, TFWeaponSlot_Grenade));
