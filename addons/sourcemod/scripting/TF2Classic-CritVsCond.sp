@@ -13,7 +13,7 @@ public Plugin myinfo =
 	name = "TF2Classic-CritVsCond",
 	author = "azzy",
 	description = "Expansion upon TF2Classic's or_crit_vs_playercond attribute, allowing usage of every available condition",
-	version = "1.0",
+	version = "1.1",
 	url = ""
 }
 
