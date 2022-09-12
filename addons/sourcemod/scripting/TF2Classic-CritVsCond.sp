@@ -84,6 +84,9 @@ public void OnClientPutInServer(int client)
 
 public Action OnTakeDamage(int victim, int& attacker, int& inflictor, float& damage, int& damageType, int& weapon, float damageForce[3], float damagePosition[3], int damagecustom)
 {
+	if(weapon == -1)
+		return Plugin_Continue;
+	
 	int weaponIndex;
 
 	char classname[32];
