@@ -13,7 +13,7 @@ public Plugin myinfo =
 	name = "TF2Classic-CritVsCond",
 	author = "azzy",
 	description = "Expansion upon TF2Classic's or_crit_vs_playercond attribute, allowing usage of every available condition",
-	version = "1.2",
+	version = "1.3",
 	url = ""
 }
 
@@ -54,23 +54,27 @@ void ParseConfig()
 		
 		int weaponid = StringToInt(weapon);
 		int cond = kv.GetNum("cond");
-		int crittype = kv.GetNum("crittype");
+		int minicrit = kv.GetNum("minicrit");
+		int selfcond = kv.GetNum("selfcond");
 
-		if(!weaponid)
-			SetFailState("[TF2Classic-CritVsCond] Invalid Weapon ID");
+		if(weaponid < 0)
+			SetFailState("[TF2Classic-CritVsCond] WARNING: Invalid Weapon ID");
 
-		if(!cond)
-			PrintToServer("[TF2Classic-CritVsCond] WARNING: Weapon ID %d may have invalid Cond check value. This is safe to ignore if value has been manually set to 0 (TF_COND_BURNING)", weaponid);
+		if(cond < 0 || cond > 114)
+			SetFailState("[TF2Classic-CritVsCond] WARNING: Weapon ID %d has invalid Cond Value", weaponid);
 
-		if(!crittype)
-			SetFailState("[TF2Classic-CritVsCond] Invalid Crit Type on weapon ID %d", weaponid);
+		if(minicrit != 0 && minicrit != 1)
+			SetFailState("[TF2Classic-CritVsCond] WARNING: Weapon ID %d has invalid Crit Type", weaponid);
 
+		if(selfcond != 0 && selfcond != 1)
+			SetFailState("[TF2Classic-CritVsCond] WARNING: Weapon ID %d has invalid Crit Check Mode", weaponid);
 
-		int weaponData[2];
+		int weaponData[3];
 		weaponData[0] = cond;
-		weaponData[1] = crittype;
+		weaponData[1] = minicrit;
+		weaponData[2] = selfcond;
 		
-		WeaponMap.SetArray(weaponid, weaponData, 2);
+		WeaponMap.SetArray(weaponid, weaponData, 3);
 
 		PrintToServer("[TF2Classic-CritVsCond] Weapon ID %d parsed", weaponid);
 	}
@@ -86,30 +90,30 @@ public Action OnTakeDamage(int victim, int& attacker, int& inflictor, float& dam
 {
 	if(weapon == -1)
 		return Plugin_Continue;
-	
+
 	int weaponIndex;
 
-	char classname[32];
-	GetEntityClassname(weapon, classname, 32);
+	char classname[16];
+	GetEntityClassname(weapon, classname, 16);
 
 	if(strcmp(classname, "obj_sentrygun") == 0)
 		weaponIndex = GetWeaponIndex(GetPlayerWeaponSlot(attacker, TFWeaponSlot_Grenade));
 	else
 		weaponIndex = GetWeaponIndex(weapon);
 	
-	int weaponData[2];
+	int weaponData[3];
 
-	if(WeaponMap.GetArray(weaponIndex, weaponData, 2))
-		if(TF2_IsPlayerInCondition(victim, view_as<TFCond>(weaponData[0])))
+	if(WeaponMap.GetArray(weaponIndex, weaponData, 3))
+		if(weaponData[2] ? TF2_IsPlayerInCondition(attacker, view_as<TFCond>(weaponData[0])) : TF2_IsPlayerInCondition(victim, view_as<TFCond>(weaponData[0])))
 			switch(weaponData[1])
 			{
-				case 1:	// crit
+				case 0:	// crit
 				{
 					damageType |= DMG_ACID;
 					return Plugin_Changed;
 				}
 
-				case 2: // minicrit
+				case 1: // minicrit
 				{
 					if (!TF2_IsPlayerInCondition(victim, TFCond_MarkedForDeath))
 					{
@@ -122,6 +126,7 @@ public Action OnTakeDamage(int victim, int& attacker, int& inflictor, float& dam
 	return Plugin_Continue;
 }
 
+
 Action Hook_RemoveMinicrits(int victim)
 {
 	SDKUnhook(victim, SDKHook_OnTakeDamagePost, Hook_RemoveMinicrits);
@@ -130,7 +135,7 @@ Action Hook_RemoveMinicrits(int victim)
 
 public Action ReloadCommandHandler(int client, int args)
 {
-	PrintToServer("Reloading...");
+	PrintToServer("[TF2Classic-CritVsCond] Reloading...");
 	ParseConfig();
 }
 
