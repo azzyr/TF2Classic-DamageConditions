@@ -41,7 +41,7 @@ Each weapon defined in the configuration file has its own section:
 	"25"        			// Item definition index for Engineer's PDA
 	{
 		"cond"		"109" 	// TF_COND_TRANQUILIZED
-		"minicrit"	"1"
+		"minicrit"	"1"	// minicrit
 	}
 	
 	"6"        			// Item definition index for soldier's shovel
