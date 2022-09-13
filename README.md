@@ -54,6 +54,8 @@ Each weapon defined in the configuration file has its own section:
 	"40"        			// Item definition index for soldier's R.P.G.
 	{
 		"cond"		"81" 	// TF_COND_BLASTJUMPING
-	}				// no crit type specified, therefore 0 (crit)
+					// no crit type specified, therefore 0 (crit)
+					// no self cond type specified, therefore 0 (attacker)
+	}
 }
 ```
