@@ -32,7 +32,7 @@ public Plugin myinfo =
 	name = "TF2Classic-DamageConditions",
 	author = "azzy",
 	description = "Expansion upon TF2Classic's condition related attributes",
-	version = "2.0",
+	version = "2.1",
 	url = ""
 }
 
@@ -267,5 +267,7 @@ void ParseConfig()
 		PrintToServer("[TF2Classic-DamageConditions] Weapon ID %d parsed", weaponid);
 	}
 	while(kv.GotoNextKey());
+	
+	delete kv;
 }
 
