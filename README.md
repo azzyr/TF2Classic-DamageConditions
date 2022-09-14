@@ -1,5 +1,5 @@
 # TF2Classic-DamageConditions
-Apply conditions 
+Expansion upon TF2Classic's condition related attributes
 
 ## Features
 - Easy configuration
