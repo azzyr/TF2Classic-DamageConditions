@@ -4,7 +4,7 @@ Expansion upon TF2Classic's condition related attributes
 ## Features
 - Easy configuration
 - Allows usage of any available condition
-- Option to deal mini-crits instead of crits
+- Option to deal mini-crits instead of crit vs condition
 - Option to check condition on self instead of targer
 - Apply effect to sentry, if using PDA item definition index
 - Weapon-only effect, eliminating the need of using `provide_on_active` attribute
