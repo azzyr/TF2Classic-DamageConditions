@@ -1,61 +1,83 @@
-# TF2Classic-CritVsCond
-TF2Classic's `or_crit_vs_playercond` attribute, expanded.
+# TF2Classic-DamageConditions
+Apply conditions 
 
 ## Features
 - Easy configuration
 - Allows usage of any available condition
 - Option to deal mini-crits instead of crits
-- Option to check condition on attacker instead of victim
+- Option to check condition on self instead of targer
 - Apply effect to sentry, if using PDA item definition index
 - Weapon-only effect, eliminating the need of using `provide_on_active` attribute
-
+- Apply condition to target and/or self
+- Option to gib on kill
 
 ## Requirements
 [AnyMap](https://github.com/dysphie/sm-anymap)
 
 ## ConVars
-### sm_critvscond_reload
+### sm_damageconditions_reload
 - Parse configuration file without reloading plugin
 
 ## Configuration File
-The configuration file is stored in `addons/sourcemod/configs/TF2Classic-CritVsCond.cfg`
+The configuration file is stored in `addons/sourcemod/configs/TF2Classic-DamageConditions.cfg`
 
-Each weapon defined in the configuration file has its own section:
+Each weapon defined in the configuration file has its own section.
 
-`cond` is the Condition ID the effect will be applied against
+If using a default value, the key is optional and does not need to be defined
 
-`minicrit` is the type of crit that will be applied (optional) 
-- `0` Crit **_(default)_**
-- `1` Mini-Crit 
+### mode
+> Player to apply condition check to, if ID is present
+- `none`  **_(default)_** 
+- `victim`
+- `attacker`
 
-`selfcond` determines wether the condition check should be applied on the victim or the attacker (optional) 
-- `0` Victim **_(default)_** 
-- `1` Attacker 
+### cond
+> Condition to check for
+- Any valid Condition ID value (Default is -1)
 
+### crittype
+> Crit type to deal if check is successful
+- `none` **_(default)_** 
+- `minicrit`
+- `crit`
+
+### gib
+> Gib victim on kill
+- `default` **_(default)_** 
+- `always`
+- `never`
+
+### addcond / addcond_self
+> Apply condition to self/victim on hit
+#### cond
+- Any valid Condition ID value (Default is -1)
+#### duration
+- Any float value (Default is 0.0)
 
 ## Example
 ```js
 
 "Weapons"
 {
-	"25"        			// Item definition index for Engineer's PDA
+	// revolver that deals mini-crits to disguised spies and applies marked-for-death to yourself
+	"24"					// spy stock revolver
 	{
-		"cond"		"109" 	// TF_COND_TRANQUILIZED
-		"minicrit"	"1"	// minicrit
-	}
-	
-	"6"        			// Item definition index for soldier's shovel
-	{
-		"cond"		"22" 	// TF_COND_BURNING
-		"minicrit"	"0" 	// crit
-		"selfcond"	"1"	// check owner of weapon's cond
-	}
+		"mode"		"victim"
+		"crittype"	"none"
+		"cond"		"3"		// TF_COND_DISGUISED
+		"gib"		"always"
+		
+		"addcond"
+		{
+			"cond"		"30"	// TF_COND_MARKEDFORDEATH
+			"duration"	"5.0"
+		}
 
-	"40"        			// Item definition index for soldier's R.P.G.
-	{
-		"cond"		"81" 	// TF_COND_BLASTJUMPING
-					// no crit type specified, therefore 0 (crit)
-					// no self cond type specified, therefore 0 (attacker)
+		"addcond_self"
+		{
+			"cond"		"30" 	// TF_COND_MARKEDFORDEATH
+			"duration"	"5.0"
+		}
 	}
 }
 ```
