@@ -102,13 +102,12 @@ public Action OnTakeDamage(int victim, int& attacker, int& inflictor, float& dam
 				switch(Data.CritType)
 				{
 					case CritType_MiniCrit:	// minicrit
-					{
 						if (!TF2_IsPlayerInCondition(victim, TFCond_MarkedForDeath))
 						{
 							TF2_AddCondition(victim, TFCond_MarkedForDeath);
 							SDKHook(victim, SDKHook_OnTakeDamagePost, Hook_RemoveMinicrits);
 						}
-					}
+						
 					case CritType_Crit: // crit
 						damageType |= DMG_ACID;
 				}
