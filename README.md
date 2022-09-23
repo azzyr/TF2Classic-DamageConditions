@@ -46,6 +46,8 @@ If using a default value, the key is optional and does not need to be defined
 - `default` **_(default)_** 
 - `always`
 - `never`
+- `cond` (gib vs cond)
+- `condcrit` (gib if crit vs cond)
 
 ### addcond / addcond_self
 > Apply condition to self/victim on hit
