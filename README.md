@@ -61,13 +61,13 @@ If using a default value, the key is optional and does not need to be defined
 
 "Weapons"
 {
-	// revolver that deals mini-crits to disguised spies and applies marked-for-death to yourself
+	// revolver that applies marked-for-death to disguised spies and yourself
 	"24"					// spy stock revolver
 	{
 		"mode"		"victim"
 		"crittype"	"none"
 		"cond"		"3"		// TF_COND_DISGUISED
-		"gib"		"always"
+		"gib"		"cond"
 		
 		"addcond"
 		{
