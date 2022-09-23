@@ -55,6 +55,7 @@ If using a default value, the key is optional and does not need to be defined
 - Any valid Condition ID value (Default is -1)
 #### duration
 - Any float value (Default is 0.0)
+- Set to -1 for infinite duration
 
 ## Example
 ```js
