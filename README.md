@@ -9,7 +9,7 @@ Expansion upon TF2Classic's condition related attributes
 - Apply effect to sentry, if using PDA item definition index
 - Weapon-only effect, eliminating the need of using `provide_on_active` attribute
 - Apply condition to target and/or self
-- Option to gib on kill
+- Option to gib on kill, or if victim has condition
 
 ## Requirements
 [AnyMap](https://github.com/dysphie/sm-anymap)
