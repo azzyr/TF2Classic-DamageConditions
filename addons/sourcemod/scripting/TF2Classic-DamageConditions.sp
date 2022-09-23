@@ -32,7 +32,7 @@ public Plugin myinfo =
 	name = "TF2Classic-DamageConditions",
 	author = "azzy",
 	description = "Expansion upon TF2Classic's condition related attributes",
-	version = "2.1",
+	version = "2.2",
 	url = ""
 }
 
@@ -80,24 +80,31 @@ public Action OnTakeDamage(int victim, int& attacker, int& inflictor, float& dam
 				switch(Data.CritType)
 				{
 					case 1:	// minicrit
+					{
 						if (!TF2_IsPlayerInCondition(victim, TFCond_MarkedForDeath))
 						{
 							TF2_AddCondition(victim, TFCond_MarkedForDeath);
 							SDKHook(victim, SDKHook_OnTakeDamagePost, Hook_RemoveMinicrits);
 						}
 
+						if(Data.Gib == 4)
+							damageType |= DMG_ALWAYSGIB;
+					}
 					case 2: // crit
+					{
 						damageType |= DMG_ACID;
+						if(Data.Gib == 4)
+							damageType |= DMG_ALWAYSGIB;
+					}
 				}
+				if(Data.Gib == 3)
+					damageType |= DMG_ALWAYSGIB;
 			}
 
-			switch(Data.Gib)
-			{
-				case 1: 
+			if(Data.Gib == 1)
 					damageType |= DMG_ALWAYSGIB;
-				case 2: 
+			if(Data.Gib == 2)
 					damageType |= DMG_NEVERGIB;
-			}
 
 			if(!isPlayerInvulnerable[victim])
 			{
@@ -221,6 +228,10 @@ void ParseConfig()
 			Data.Gib = 1;
 		else if(!strcmp(tempstring, "never"))
 			Data.Gib = 2;
+		else if(!strcmp(tempstring, "cond"))
+			Data.Gib = 3;
+		else if(!strcmp(tempstring, "condcrit"))
+			Data.Gib = 4;
 		else
 			Data.Gib = 0;
 
@@ -270,4 +281,3 @@ void ParseConfig()
 	
 	delete kv;
 }
-
